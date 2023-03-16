@@ -1,0 +1,57 @@
+<html>
+  <body>
+    <form onsubmit="saveToLocalStorage(event)">
+      <label>Name</label>
+      <input type="text" name="username" required />
+      <label>Email</label>
+      <input type="email" name="email" required />
+      <label>Phone Number</label>
+      <input type="tel" name="phonenumber" pattern="[0-9]{10}" required />
+      <button type="submit">Submit</button>
+    </form>
+    <div id="displayDiv">
+      <!-- Existing stored values will be displayed here -->
+    </div>
+    <script>
+      function saveToLocalStorage(event) {
+        event.preventDefault();
+        const name = event.target.username.value;
+        const email = event.target.email.value;
+        const phonenumber = event.target.phonenumber.value;
+        localStorage.setItem("name", name);
+        localStorage.setItem("email", email);
+        localStorage.setItem("phonenumber", phonenumber);
+
+        // Create elements to display the stored values
+        const nameDisplay = document.createElement("p");
+        nameDisplay.textContent = "Name: " + name;
+        const emailDisplay = document.createElement("p");
+        emailDisplay.textContent = "Email: " + email;
+        const phoneDisplay = document.createElement("p");
+        phoneDisplay.textContent = "Phone Number: " + phonenumber;
+
+        // Create delete button for stored values
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", function () {
+          localStorage.removeItem("name");
+          localStorage.removeItem("email");
+          localStorage.removeItem("phonenumber");
+          displayDiv.removeChild(nameDisplay);
+          displayDiv.removeChild(emailDisplay);
+          displayDiv.removeChild(phoneDisplay);
+          displayDiv.removeChild(deleteButton);
+        });
+
+        // Append the elements to the document
+        const displayDiv = document.getElementById("displayDiv");
+        displayDiv.appendChild(nameDisplay);
+        displayDiv.appendChild(emailDisplay);
+        displayDiv.appendChild(phoneDisplay);
+        displayDiv.appendChild(deleteButton);
+
+        alert("Form submitted successfully!");
+      }
+    </script>
+  </body>
+</html>
